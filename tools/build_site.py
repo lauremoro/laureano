@@ -79,6 +79,7 @@ COMBINING_ACCENTS = {
 
 def latex_text(value: str) -> str:
     value = strip_comments(value).strip()
+    value = value.replace(r"\underline", "")
     for source, target in ACCENTS.items():
         value = value.replace(source, target)
     value = re.sub(
