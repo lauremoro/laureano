@@ -1,0 +1,35 @@
+
+\documentclass[11pt]{article}
+\usepackage{cvstyle}
+
+\newcounter{grantctr}
+
+\newcommand{\grantitem}[1]{%
+  \stepcounter{grantctr}%
+  \cvitem{\arabic{grantctr}}{#1}%
+}
+
+
+
+\addbibresource{list.bib}
+\addbibresource{conferences.bib}
+
+\begin{document}
+
+\input{sections/header}
+\input{sections/education}
+\input{sections/appointments}
+\input{sections/publications}
+%\input{sections/other_scientific_production}
+%\newpage
+\input{sections/awards}
+\input{sections/grants}
+\input{sections/service}
+\input{sections/invited_talks}
+\input{sections/teaching}
+\input{sections/mentorship}
+\input{sections/academic_committees}
+\input{sections/other_teaching}
+
+
+\end{document}

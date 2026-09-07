@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{{META_DESCRIPTION}}">
+  <title>{{NAME}} · Academic profile</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="site.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <a class="wordmark" href="#top" aria-label="{{NAME}}, home">LM<span>V</span></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav id="site-nav" class="site-nav" aria-label="Primary navigation">
+      <a href="#about">About</a>
+      <a href="#research">Research</a>
+      <a href="#publications">Publications</a>
+      <a href="#awards">Awards</a>
+      <a href="#talks">Talks</a>
+      <a href="#service">Service</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="hero-copy">
+        <p class="eyebrow">{{TITLE}}</p>
+        <h1>{{NAME}}</h1>
+        <p class="hero-intro">{{SHORT_INTRO}}</p>
+        <p class="affiliation">{{AFFILIATION}} · {{LOCATION}}</p>
+        <div class="hero-links" aria-label="Profile links">{{PROFILE_LINKS}}</div>
+      </div>
+      <div class="portrait-shell">
+        {{PORTRAIT}}
+        <span class="orbit orbit-one" aria-hidden="true"></span>
+        <span class="orbit orbit-two" aria-hidden="true"></span>
+      </div>
+      <div class="hero-stats" aria-label="Publication overview">
+        <div><strong>{{JOURNAL_COUNT}}</strong><span>journal articles</span></div>
+        <div><strong>{{CONFERENCE_COUNT}}</strong><span>conference papers</span></div>
+        <div><strong>{{LATEST_YEAR}}</strong><span>latest work</span></div>
+      </div>
+    </section>
+
+    <section class="section about-grid" id="about">
+      <div><p class="section-kicker">Profile</p><h2>About</h2></div>
+      <p class="about-copy">{{ABOUT}}</p>
+    </section>
+
+    <section class="section" id="research">
+      <div class="section-heading"><div><p class="section-kicker">Focus</p><h2>Research themes</h2></div></div>
+      <div class="themes">{{RESEARCH_THEMES}}</div>
+    </section>
+
+    <section class="section" id="publications">
+      <div class="section-heading">
+        <div><p class="section-kicker">Scholarship</p><h2>Publications</h2></div>
+        <p>Researchers supervised by Prof. Moro-Velazquez are underlined.</p>
+      </div>
+      <h3 class="subheading">Selected work</h3>
+      <div class="publication-list selected-list">{{SELECTED_PUBLICATIONS}}</div>
+      <div class="all-publications-heading">
+        <h3 class="subheading">All publications</h3>
+        <div class="publication-controls" aria-label="Filter publications">
+          <label><span>Type</span><select id="type-filter"><option value="all">All</option><option value="journal">Journal</option><option value="conference">Conference</option></select></label>
+          <label><span>Year</span><select id="year-filter"><option value="all">All years</option>{{YEAR_OPTIONS}}</select></label>
+          <label class="search-label"><span>Search</span><input id="publication-search" type="search" placeholder="Title, author, or venue"></label>
+        </div>
+      </div>
+      <p id="publication-count" class="result-count" aria-live="polite"></p>
+      <div id="all-publications" class="publication-list">{{ALL_PUBLICATIONS}}</div>
+      <p id="no-publications" class="empty-state" hidden>No publications match these filters.</p>
+    </section>
+
+    <section class="section" id="awards">
+      <div class="section-heading"><div><p class="section-kicker">Recognition</p><h2>Awards &amp; honors</h2></div></div>
+      <div class="timeline">{{AWARDS}}</div>
+    </section>
+
+    <section class="section" id="talks">
+      <div class="section-heading"><div><p class="section-kicker">Selected appearances</p><h2>Invited talks</h2></div></div>
+      <div class="talk-grid">{{TALKS}}</div>
+    </section>
+
+    <section class="section" id="service">
+      <div class="section-heading"><div><p class="section-kicker">Academic community</p><h2>Professional service</h2></div></div>
+      <div class="service-groups">{{SERVICE}}</div>
+    </section>
+  </main>
+
+  <footer>
+    <div><strong>{{NAME}}</strong><br>{{AFFILIATION}}</div>
+    <div class="footer-meta">Last updated {{UPDATED}}<br>Built automatically from the LaTeX CV.</div>
+  </footer>
+</body>
+</html>

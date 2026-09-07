@@ -1,0 +1,106 @@
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{cvstyle}[2026/04/23 Academic CV style]
+
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[T1]{fontenc}
+\RequirePackage{lmodern}
+\RequirePackage[letterpaper,margin=0.82in]{geometry}
+\RequirePackage{xcolor}
+\RequirePackage{titlesec}
+\RequirePackage{enumitem}
+\RequirePackage{hyperref}
+\RequirePackage{microtype}
+\RequirePackage{fancyhdr}
+\RequirePackage{csquotes}
+\RequirePackage[backend=biber,style=ieee,sorting=none,defernumbers=true,maxbibnames=99,doi=false,url=false,isbn=false,eprint=false]{biblatex}
+
+\definecolor{accent}{HTML}{173B63}
+\definecolor{muted}{HTML}{56606B}
+\definecolor{rulegray}{HTML}{D0D7DE}
+
+\hypersetup{
+  colorlinks=true,
+  urlcolor=accent,
+  linkcolor=accent
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.35em}
+\setlength{\bibitemsep}{0.55\baselineskip}
+\setlength{\emergencystretch}{2em}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[L]{\textcolor{muted}{Laureano Moro-Velazquez}}
+\fancyfoot[R]{\textcolor{muted}{\thepage}}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\titleformat{\section}
+  {\Large\bfseries\color{accent}}
+  {}{0pt}{}
+  [\vspace{0.25em}\color{rulegray}\titlerule]
+
+\titleformat{\subsection}
+  {\normalsize\bfseries\color{accent}}
+  {}{0pt}{}
+
+\titlespacing*{\section}{0pt}{1.15em}{0.55em}
+\titlespacing*{\subsection}{0pt}{0.8em}{0.3em}
+
+\newlist{cvlist}{description}{1}
+\setlist[cvlist]{
+  font=\normalfont\bfseries\color{muted},
+  labelsep=0.8em,
+  leftmargin=3.25cm,
+  labelwidth=2.45cm,
+  style=multiline,
+  itemsep=0.5em,
+  topsep=0.2em,
+  parsep=0pt,
+  partopsep=0pt
+}
+
+\setlist[itemize]{
+  leftmargin=1.3em,
+  itemsep=0.2em,
+  topsep=0.2em,
+  parsep=0pt,
+  partopsep=0pt
+}
+
+\setlist[enumerate]{
+  leftmargin=1.6em,
+  itemsep=0.35em,
+  topsep=0.2em,
+  parsep=0pt,
+  partopsep=0pt
+}
+
+\newcommand{\cvitem}[2]{\item[\textnormal{\small #1}] #2}
+\newcommand{\entrytitle}[1]{\textbf{#1}}
+\newcommand{\institution}[1]{\textit{#1}}
+\newcommand{\detail}[2]{\textit{#1}: #2}
+\newcommand{\sectionnote}[1]{\vspace{-0.2em}{\small\textcolor{muted}{#1}}\par\vspace{0.25em}}
+\newcommand{\headername}[1]{{\Huge\bfseries\color{accent} #1}\par}
+\newcommand{\headerline}[1]{{\normalsize #1}\par}
+
+\DeclareFieldFormat[article,inproceedings,incollection]{title}{#1}
+\DeclareFieldFormat[misc]{title}{#1}
+
+\AtEveryBibitem{%
+  \clearfield{month}%
+  \clearfield{day}%
+  \clearfield{issn}%
+  \clearfield{isbn}%
+  \clearfield{urldate}%
+  \clearlist{language}%
+}
+
+\defbibenvironment{cvbib}
+  {\list{}{\setlength{\leftmargin}{0pt}\setlength{\itemindent}{0pt}\setlength{\itemsep}{0.65\baselineskip}\setlength{\parsep}{0pt}\setlength{\parskip}{0pt}}}
+  {\endlist}
+  {\item}
+
+\renewcommand*{\bibfont}{\small}
