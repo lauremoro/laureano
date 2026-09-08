@@ -138,7 +138,45 @@ def header_data() -> dict[str, object]:
 def parse_cvitems(path: Path) -> list[tuple[str, str]]:
     text = strip_comments(path.read_text(encoding="utf-8"))
     return [(latex_text(year), latex_text(body)) for year, body in commands(text, "cvitem", 2)]
+    
+def parse_research_outputs() -> list[tuple[str, str, str]]:
+    path = ROOT / "sections/research_outputs.tex"
 
+    if not path.exists():
+        return []
+
+    text = strip_comments(path.read_text(encoding="utf-8"))
+    outputs = []
+
+    for year, body in commands(text, "cvitem", 2):
+        urls = commands(body, "url")
+        url = urls[0][0].strip() if urls else ""
+
+        # Remove \url{...} before converting the remaining LaTeX to text.
+        description_source = re.sub(
+            r"\\url\s*\{[^{}]*\}",
+            "",
+            body,
+        )
+        description = latex_text(description_source)
+
+        # Remove redundant link-introduction text from the card.
+        description = re.sub(
+            r"\s*(?:Available at|Data and code available at):\s*$",
+            "",
+            description,
+            flags=re.IGNORECASE,
+        ).rstrip(". ")
+
+        outputs.append(
+            (
+                latex_text(year),
+                description,
+                url,
+            )
+        )
+
+    return outputs
 
 def parse_talks() -> list[str]:
     text = strip_comments((ROOT / "sections/invited_talks.tex").read_text(encoding="utf-8"))
@@ -274,6 +312,7 @@ def main() -> None:
     if not selected:
         selected = publications[:6]
 
+    research_outputs = parse_research_outputs()
     awards = parse_cvitems(ROOT / "sections/awards.tex")
     talks = parse_talks()
     service = parse_service()
@@ -301,6 +340,24 @@ def main() -> None:
         + "</ul></section>" for title, items in service
     )
     years = sorted({latex_text(entry.get("year", "")) for entry in publications if entry.get("year")}, reverse=True)
+    research_outputs_html = "".join(
+    f'''
+    <article class="timeline-item">
+      <div class="timeline-year">{html.escape(year)}</div>
+      <div>
+        <p>{html.escape(description)}</p>
+        {
+            f'<a class="publication-link" '
+            f'href="{html.escape(url, quote=True)}">'
+            f'View resource ↗</a>'
+            if url.startswith(("https://", "http://"))
+            else ""
+        }
+      </div>
+    </article>
+    '''
+    for year, description, url in research_outputs
+    )    
     replacements = {
         "NAME": html.escape(str(header["name"])), "TITLE": html.escape(config["title"]),
         "AFFILIATION": html.escape(str(header["affiliation"])), "LOCATION": html.escape(config["location"]),
@@ -312,6 +369,7 @@ def main() -> None:
         "SELECTED_PUBLICATIONS": "".join(publication_html(entry) for entry in selected),
         "ALL_PUBLICATIONS": "".join(publication_html(entry) for entry in publications),
         "YEAR_OPTIONS": "".join(f'<option value="{html.escape(year)}">{html.escape(year)}</option>' for year in years),
+        "RESEARCH_OUTPUTS": research_outputs_html,
         "AWARDS": awards_html, "TALKS": talk_html(talks), "SERVICE": service_html,
         "UPDATED": html.escape(os.environ.get("SITE_UPDATED", date.today().isoformat())),
     }
