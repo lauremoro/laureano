@@ -317,8 +317,8 @@ def main() -> None:
     talks = parse_talks()
     service = parse_service()
     profile_links = list(header["links"])
-    if os.environ.get("CV_AVAILABLE") == "1" or (ROOT / "main.pdf").exists():
-        profile_links.insert(1, ("CV_Laureano_Moro-Velazquez.pdf", "Download CV"))
+    #if os.environ.get("CV_AVAILABLE") == "1" or (ROOT / "main.pdf").exists():
+    #    profile_links.insert(1, ("CV_Laureano_Moro-Velazquez.pdf", "Download CV"))
 
     portrait_file = next((ROOT / "assets" / filename for filename in ("profile.jpg", "profile.jpeg", "profile.png", "profile.webp") if (ROOT / "assets" / filename).exists()), None)
     portrait = (
